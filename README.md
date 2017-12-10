@@ -1,6 +1,6 @@
 The tabs() function
 ================
-Manuel Neumann
+Manuel Neumann (@IDEK\_Neu)
 
 Quick and Dirty: The tabs()-function
 ------------------------------------
@@ -49,7 +49,7 @@ tabs(mtc$cyl)
 
     ## $Summary
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-    ##   4.000   4.000   6.000   6.143   8.000   8.000       4 
+    ##   4.000   4.000   6.000   6.071   8.000   8.000       4 
     ## 
     ## $Quantiles
     ##  2.5% 97.5% 
@@ -58,22 +58,22 @@ tabs(mtc$cyl)
     ## $AbsDistNA
     ## variable
     ##    4    6    8 <NA>  Sum 
-    ##   10    6   12    4   32 
+    ##   10    7   11    4   32 
     ## 
     ## $RelDistNA
     ## variable
     ##     4     6     8  <NA> 
-    ## 31.25 18.75 37.50 12.50 
+    ## 31.25 21.88 34.38 12.50 
     ## 
     ## $AbsDist
     ## variable
     ##   4   6   8 Sum 
-    ##  10   6  12  28 
+    ##  10   7  11  28 
     ## 
     ## $RelDist
     ## variable
     ##     4     6     8 
-    ## 35.71 21.43 42.86
+    ## 35.71 25.00 39.29
 
 Let's take a look at some non-numeric data:
 
@@ -103,12 +103,12 @@ tabs(diam$color)
 ![](README_files/figure-markdown_github/diamonds-1.png)
 
     ## $Summary
-    ## [1] "No summary statistics, since diam$color is not a numeric vector, but has class ordered"
-    ## [2] "No summary statistics, since diam$color is not a numeric vector, but has class factor" 
+    ## [1] "No summary statistics, since diam$color is not a numeric|integer vector, but has class ordered"
+    ## [2] "No summary statistics, since diam$color is not a numeric|integer vector, but has class factor" 
     ## 
     ## $Quantiles
-    ## [1] "No quantiles, since diam$color is not a numeric vector, but has class ordered"
-    ## [2] "No quantiles, since diam$color is not a numeric vector, but has class factor" 
+    ## [1] "No quantiles, since diam$color is not a numeric|integer vector, but has class ordered"
+    ## [2] "No quantiles, since diam$color is not a numeric|integer vector, but has class factor" 
     ## 
     ## $AbsDistNA
     ## variable
@@ -156,36 +156,36 @@ tabs(mtc$hp, quantiles = c(0.2, 0.8), rd = 1, barNA = TRUE, name = "Horse Power"
 
     ## $Summary
     ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
-    ##    52.0    96.5   118.0   146.8   180.0   335.0       4 
+    ##    52.0    94.5   118.0   143.8   180.0   335.0       4 
     ## 
     ## $Quantiles
     ##   20%   80% 
-    ##  93.8 195.0 
+    ##  91.8 195.0 
     ## 
     ## $AbsDistNA
     ## variable
-    ##   52   62   65   66   91   93   95   97  105  109  110  113  123  150  175 
-    ##    1    1    1    1    1    1    1    1    1    1    3    1    1    1    3 
-    ##  180  205  215  230  245  264  335 <NA>  Sum 
-    ##    3    1    1    1    1    1    1    4   32 
+    ##   52   62   65   66   91   93   95   97  105  110  113  123  150  175  180 
+    ##    1    1    1    2    1    1    1    1    1    3    1    2    1    3    2 
+    ##  205  215  245  264  335 <NA>  Sum 
+    ##    1    1    2    1    1    4   32 
     ## 
     ## $RelDistNA
     ## variable
-    ##   52   62   65   66   91   93   95   97  105  109  110  113  123  150  175 
-    ##  3.1  3.1  3.1  3.1  3.1  3.1  3.1  3.1  3.1  3.1  9.4  3.1  3.1  3.1  9.4 
-    ##  180  205  215  230  245  264  335 <NA> 
-    ##  9.4  3.1  3.1  3.1  3.1  3.1  3.1 12.5 
+    ##   52   62   65   66   91   93   95   97  105  110  113  123  150  175  180 
+    ##  3.1  3.1  3.1  6.2  3.1  3.1  3.1  3.1  3.1  9.4  3.1  6.2  3.1  9.4  6.2 
+    ##  205  215  245  264  335 <NA> 
+    ##  3.1  3.1  6.2  3.1  3.1 12.5 
     ## 
     ## $AbsDist
     ## variable
-    ##  52  62  65  66  91  93  95  97 105 109 110 113 123 150 175 180 205 215 
-    ##   1   1   1   1   1   1   1   1   1   1   3   1   1   1   3   3   1   1 
-    ## 230 245 264 335 Sum 
-    ##   1   1   1   1  28 
+    ##  52  62  65  66  91  93  95  97 105 110 113 123 150 175 180 205 215 245 
+    ##   1   1   1   2   1   1   1   1   1   3   1   2   1   3   2   1   1   2 
+    ## 264 335 Sum 
+    ##   1   1  28 
     ## 
     ## $RelDist
     ## variable
-    ##   52   62   65   66   91   93   95   97  105  109  110  113  123  150  175 
-    ##  3.6  3.6  3.6  3.6  3.6  3.6  3.6  3.6  3.6  3.6 10.7  3.6  3.6  3.6 10.7 
-    ##  180  205  215  230  245  264  335 
-    ## 10.7  3.6  3.6  3.6  3.6  3.6  3.6
+    ##   52   62   65   66   91   93   95   97  105  110  113  123  150  175  180 
+    ##  3.6  3.6  3.6  7.1  3.6  3.6  3.6  3.6  3.6 10.7  3.6  7.1  3.6 10.7  7.1 
+    ##  205  215  245  264  335 
+    ##  3.6  3.6  7.1  3.6  3.6

@@ -7,7 +7,7 @@ tabs <- function(variable,
   vectn <- deparse(substitute(variable)) # Get the name of the vector/variable
   
   # If the vector is numeric or integer, give summary statistics and a histogram,
-  # else, print an information that vector != numeric
+  # else, print an information that vector != numeric | integer
   if (class(variable) == "numeric" || class(variable) == "integer"){
     hist(variable,
          main = paste("Histogram of\n", name))
@@ -17,15 +17,15 @@ tabs <- function(variable,
     # Empty Plot:
     plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
     # Warning in the middle:
-    text(x = 0.5, y = 0.5, paste("No histogram, since\n", vectn, "\nis not numeric"), 
+    text(x = 0.5, y = 0.5, paste("No histogram, since\n", vectn, "\nis not numeric|integer"), 
          cex = 1.6, col = "black")
     smy <- paste("No summary statistics, since", 
                  vectn, 
-                 "is not a numeric vector, but has class",
+                 "is not a numeric|integer vector, but has class",
                  class(variable))
     quant <- paste("No quantiles, since", 
                    vectn, 
-                   "is not a numeric vector, but has class",
+                   "is not a numeric|integer vector, but has class",
                    class(variable))}
   
   # Create tables ---
@@ -52,8 +52,8 @@ tabs <- function(variable,
   
   # Make a barplot:
   if (barNA == TRUE) {
-    tabNA %>% barplot(main = name)
-  } else tab %>% barplot(main = name)
+    barplot(tabNA, main = name)
+  } else barplot(tab, main = name)
   
   # Return the list
   return(list)
