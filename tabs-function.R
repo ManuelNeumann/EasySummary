@@ -1,10 +1,11 @@
 # Write funcitons to get an easy overlook over the data: ---
 tabs <- function(variable, 
                  lower = 0.025, upper = 0.975,
+                 rd = 2
                  name = deparse(substitute(variable))){
   vectn <- deparse(substitute(variable)) # Get the name of the vector/variable
   
-  # If the vector is numeric, give summary statistics and a histogram,
+  # If the vector is numeric or integer, give summary statistics and a histogram,
   # else, print an information that vector != numeric
   if (class(variable) == "numeric" || class(variable) == "integer"){
     hist(variable,
@@ -31,22 +32,22 @@ tabs <- function(variable,
   # With NAs:
   tabNA <- table(variable, useNA = "always")
   tabNASum <- tabNA %>% addmargins() # With rowmargins
-  ptabNA <- tabNA %>% prop.table() %>% {.*100} %>% round(2) # Relative distribution
+  ptabNA <- tabNA %>% prop.table() %>% {.*100} %>% round(rd) # Relative distribution
   
   # Without NAs:
   tab <- table(variable)
   tabSum <- tab %>% addmargins() # With rowmargins
-  ptab <- tab %>% prop.table() %>% {.*100} %>% round(2) # Relative distribution
+  ptab <- tab %>% prop.table() %>% {.*100} %>% round(rd) # Relative distribution
   
   # Make a list out off all elements
   list <- list(smy, quant, tabNASum, ptabNA, tabSum, ptab)
   # Name the elements
   names(list) <- c("Summary",
                    "Quantiles",
-                   "Absolute Distribution (with NA)", 
-                   "Relative Distribution (with NA)",
-                   "Absolute Distribution", 
-                   "Relative Distribution")
+                   "AbsDistNA", 
+                   "RelDistNA",
+                   "AbsDist", 
+                   "RelDist")
   
   # Make a barplot:
   table(variable) %>% barplot(main = name)
