@@ -1,7 +1,8 @@
 # Write funcitons to get an easy overlook over the data: ---
 tabs <- function(variable, 
-                 lower = 0.025, upper = 0.975,
-                 rd = 2
+                 quantiles = c(0.025, 0.975),
+                 rd = 2,
+                 barNA = FALSE,
                  name = deparse(substitute(variable))){
   vectn <- deparse(substitute(variable)) # Get the name of the vector/variable
   
@@ -11,7 +12,7 @@ tabs <- function(variable,
     hist(variable,
          main = paste("Histogram of\n", name))
     smy <- summary(variable)
-    quant <- quantile(x = variable, probs = c(lower, upper), na.rm = TRUE)
+    quant <- quantile(x = variable, probs = quantiles, na.rm = TRUE)
   } else {
     # Empty Plot:
     plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
@@ -50,7 +51,9 @@ tabs <- function(variable,
                    "RelDist")
   
   # Make a barplot:
-  table(variable) %>% barplot(main = name)
+  if (barNA == TRUE) {
+    tabNA %>% barplot(main = name)
+  } else tab %>% barplot(main = name)
   
   # Return the list
   return(list)

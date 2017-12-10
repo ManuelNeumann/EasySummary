@@ -2,22 +2,84 @@ The tabs() function
 ================
 Manuel Neumann
 
-Quick and Dirty: THe tabs()-function
+Quick and Dirty: The tabs()-function
 ------------------------------------
 
 Let's summarize the function as quick and dirty as the function summarizes a vector: Put a vector into the tabs() function and get all sorts of tables (with and without NAs & absolute/relative frequency distribution), as well as a quick and dirty histogram (for numeric | integer vectors) and a barplot.
 
-Including Code
---------------
+Demonstration
+-------------
 
-You can include R code in the document as follows:
+Let's load the function:
 
 ``` r
-library(magrittr)
-source(file = "tabs-function.R")
+library(magrittr) # Work with pipes
+source(file = "tabs-function.R") # Load the function
+```
 
+Let's begin with the good old mtcars data:
+
+``` r
+mtc <- mtcars
+head(mtc)
+```
+
+    ##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+    ## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+    ## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+    ## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+    ## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+    ## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+    ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+
+``` r
+# Add randomly NAs
+samNA <- sample(length(mtc[,1]), 4)
+mtc$cyl[samNA] <- NA
+
+# The function will return two plots. If you want to compar them, plotting them
+# side by side may be nice:
+par(mfrow = c(1,2))
+
+# Choose a variable and run the tabs() function:
+tabs(mtc$cyl)
+```
+
+![](README_files/figure-markdown_github/cars-1.png)
+
+    ## $Summary
+    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    ##   4.000   4.000   6.000   6.143   8.000   8.000       4 
+    ## 
+    ## $Quantiles
+    ##  2.5% 97.5% 
+    ##     4     8 
+    ## 
+    ## $AbsDistNA
+    ## variable
+    ##    4    6    8 <NA>  Sum 
+    ##   10    6   12    4   32 
+    ## 
+    ## $RelDistNA
+    ## variable
+    ##     4     6     8  <NA> 
+    ## 31.25 18.75 37.50 12.50 
+    ## 
+    ## $AbsDist
+    ## variable
+    ##   4   6   8 Sum 
+    ##  10   6  12  28 
+    ## 
+    ## $RelDist
+    ## variable
+    ##     4     6     8 
+    ## 35.71 21.43 42.86
+
+Let's take a look at some non-numeric data:
+
+``` r
+# Load the diamonds data set
 diam <- ggplot2::diamonds
-
 head(diam)
 ```
 
@@ -32,67 +94,21 @@ head(diam)
     ## 6  0.24 Very Good     J    VVS2  62.8    57   336  3.94  3.96  2.48
 
 ``` r
-head(mtcars)
-```
-
-    ##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
-    ## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
-    ## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
-    ## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
-    ## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
-    ## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
-    ## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
-
-``` r
-# The function:
 par(mfrow = c(1,2))
 
-mtcars$cyl %>% tabs()
+# And run the function
+tabs(diam$color)
 ```
 
 ![](README_files/figure-markdown_github/diamonds-1.png)
 
     ## $Summary
-    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-    ##   4.000   4.000   6.000   6.188   8.000   8.000 
+    ## [1] "No summary statistics, since diam$color is not a numeric vector, but has class ordered"
+    ## [2] "No summary statistics, since diam$color is not a numeric vector, but has class factor" 
     ## 
     ## $Quantiles
-    ##  2.5% 97.5% 
-    ##     4     8 
-    ## 
-    ## $AbsDistNA
-    ## variable
-    ##    4    6    8 <NA>  Sum 
-    ##   11    7   14    0   32 
-    ## 
-    ## $RelDistNA
-    ## variable
-    ##     4     6     8  <NA> 
-    ## 34.38 21.88 43.75  0.00 
-    ## 
-    ## $AbsDist
-    ## variable
-    ##   4   6   8 Sum 
-    ##  11   7  14  32 
-    ## 
-    ## $RelDist
-    ## variable
-    ##     4     6     8 
-    ## 34.38 21.88 43.75
-
-``` r
-diam$color %>% tabs()
-```
-
-![](README_files/figure-markdown_github/diamonds-2.png)
-
-    ## $Summary
-    ## [1] "No summary statistics, since . is not a numeric vector, but has class ordered"
-    ## [2] "No summary statistics, since . is not a numeric vector, but has class factor" 
-    ## 
-    ## $Quantiles
-    ## [1] "No quantiles, since . is not a numeric vector, but has class ordered"
-    ## [2] "No quantiles, since . is not a numeric vector, but has class factor" 
+    ## [1] "No quantiles, since diam$color is not a numeric vector, but has class ordered"
+    ## [2] "No quantiles, since diam$color is not a numeric vector, but has class factor" 
     ## 
     ## $AbsDistNA
     ## variable
@@ -114,5 +130,62 @@ diam$color %>% tabs()
     ##     D     E     F     G     H     I     J 
     ## 12.56 18.16 17.69 20.93 15.39 10.05  5.21
 
-Including Plots
----------------
+Specifications
+--------------
+
+You can easily specify some of the options. The defaults look like this:
+
+-   quantiles: a vector with the lower and upper bound of the quantile (default: c(0.025, 0.975))
+-   rd: round the decimals (default: 2)
+-   barNA: include the NAs in the barplot (default: FALSE)
+-   name: give the variable a name (e.g. for the plots; default: the vector name)
+
+``` r
+# Example
+
+# Add randomly NAs
+mtc$hp[samNA] <- NA
+
+par(mfrow = c(1,2))
+
+# The function with additions:
+tabs(mtc$hp, quantiles = c(0.2, 0.8), rd = 1, barNA = TRUE, name = "Horse Power")
+```
+
+![](README_files/figure-markdown_github/unnamed-chunk-1-1.png)
+
+    ## $Summary
+    ##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+    ##    52.0    96.5   118.0   146.8   180.0   335.0       4 
+    ## 
+    ## $Quantiles
+    ##   20%   80% 
+    ##  93.8 195.0 
+    ## 
+    ## $AbsDistNA
+    ## variable
+    ##   52   62   65   66   91   93   95   97  105  109  110  113  123  150  175 
+    ##    1    1    1    1    1    1    1    1    1    1    3    1    1    1    3 
+    ##  180  205  215  230  245  264  335 <NA>  Sum 
+    ##    3    1    1    1    1    1    1    4   32 
+    ## 
+    ## $RelDistNA
+    ## variable
+    ##   52   62   65   66   91   93   95   97  105  109  110  113  123  150  175 
+    ##  3.1  3.1  3.1  3.1  3.1  3.1  3.1  3.1  3.1  3.1  9.4  3.1  3.1  3.1  9.4 
+    ##  180  205  215  230  245  264  335 <NA> 
+    ##  9.4  3.1  3.1  3.1  3.1  3.1  3.1 12.5 
+    ## 
+    ## $AbsDist
+    ## variable
+    ##  52  62  65  66  91  93  95  97 105 109 110 113 123 150 175 180 205 215 
+    ##   1   1   1   1   1   1   1   1   1   1   3   1   1   1   3   3   1   1 
+    ## 230 245 264 335 Sum 
+    ##   1   1   1   1  28 
+    ## 
+    ## $RelDist
+    ## variable
+    ##   52   62   65   66   91   93   95   97  105  109  110  113  123  150  175 
+    ##  3.6  3.6  3.6  3.6  3.6  3.6  3.6  3.6  3.6  3.6 10.7  3.6  3.6  3.6 10.7 
+    ##  180  205  215  230  245  264  335 
+    ## 10.7  3.6  3.6  3.6  3.6  3.6  3.6
