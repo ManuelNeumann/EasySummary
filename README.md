@@ -1,6 +1,6 @@
 The tabs() function
 ================
-Manuel Neumann (@IDEK\_Neu)
+Manuel Neumann (@powi\_manu)
 
 Quick and Dirty: The tabs()-function
 ------------------------------------
